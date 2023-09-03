@@ -80,7 +80,7 @@ async def info(ctx):
   embed.add_field(name="Разработчик:", value="lotigara", inline=True)
   embed.add_field(name="Лицензия:", value="GNU GPL v3.0", inline=True)
   embed.add_field(name="Исходный код:",
-                  value="[вот](https://github.com/lotigara/foxcraft-bot/)",
+                  value="[Вот](https://github.com/lotigara/foxcraft-bot/)",
                   inline=True)
   embed.set_footer(
       text="Ставьте GNU/Linux или FreeBSD.")  # footers can have icons too
