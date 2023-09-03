@@ -9,7 +9,6 @@ from webserver import keep_alive
 import os  # default module
 import random
 
-# response = os.system("ping -c 1 " + hostname)
 intents = discord.Intents.all()
 
 bot = discord.Bot(command_prefix="!", intents=intents)
@@ -40,7 +39,6 @@ async def on_message(message):
 
 @bot.slash_command(name="статус",
                    description="Посмотреть статус Minecraft-сервера FoxCraft.")
-# @bot.bridge_command()
 async def server_status(ctx):
   try:
     server = JavaServer.lookup(os.environ['IP_ADDRESS'])
@@ -71,7 +69,6 @@ async def server_status(ctx):
 
 
 @bot.slash_command(name="инфо", description="Посмотреть информацию обо мне!")
-# @bot.bridge_command()
 async def info(ctx):
   embed = discord.Embed(
       title="FoxCraft Bot",
@@ -81,6 +78,10 @@ async def info(ctx):
   embed.set_author(name="Команда FoxCraft", icon_url="https://ibb.co/GR6sq2g")
   embed.add_field(name="Версия:", value="0.0.3", inline=True)
   embed.add_field(name="Разработчик:", value="lotigara", inline=True)
+  embed.add_field(name="Лицензия:", value="GNU GPL v3.0", inline=True)
+  embed.add_field(name="Исходный код:",
+                  value="[вот](https://github.com/lotigara/foxcraft-bot/)",
+                  inline=True)
   embed.set_footer(
       text="Ставьте GNU/Linux или FreeBSD.")  # footers can have icons too
   await ctx.respond(embed=embed)
