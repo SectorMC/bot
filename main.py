@@ -9,6 +9,7 @@ from webserver import keep_alive
 import os  # default module
 import random
 
+# response = os.system("ping -c 1 " + hostname)
 intents = discord.Intents.all()
 
 bot = discord.Bot(command_prefix="!", intents=intents)
@@ -26,7 +27,7 @@ async def on_message(message):
   randommessage = [
       'Зачем ты это сделал? Ладно, вот',
       'Привет, привет! Как дела? Посмотри на',
-      'Вау, меня кто-то пинганул? Круто, вот', 'Я так сладко спал... Вот'
+      'Вау, меня кто-то пинганул? Круто, вот', 'Спасибо за напоминание о смазке конечностей. Вот'
   ]
   if message.author == bot.user:
     return
@@ -37,29 +38,30 @@ async def on_message(message):
       )
 
 
-@bot.slash_command(name="статус",
-                   description="Посмотреть статус Minecraft-сервера FoxCraft.")
-async def server_status(ctx):
+@bot.slash_command(name="status",
+                   description="Посмотреть статус Minecraft-сервера Сектор.")
+# @bot.bridge_command()
+async def status(ctx):
   try:
     server = JavaServer.lookup(os.environ['IP_ADDRESS'])
     status = server.status()
   except ConnectionRefusedError:
     embed = discord.Embed(
-        title="Сервер FoxCraft выключен или к нему не удалось подключиться!",
+        title="Сервер Сектор выключен или к нему не удалось подключиться!",
         description=
         "Если вы хотите узнать доп. информацию, то заходите на [**Discord-сервер**](https://dsc.gg/foxcraft-mc)!",
         color=discord.Colour.red(
         )  # Pycord provides a class with default colors you can choose from
     )
-    embed.set_author(name="Команда FoxCraft",
+    embed.set_author(name="Команда Сектора",
                      icon_url="https://ibb.co/GR6sq2g")
   else:
     embed = discord.Embed(
-        title="Сервер FoxCraft включен!",
+        title="Сервер Сектор включен!",
         description=
         "Если вы хотите узнать доп. информацию, то заходите на [**Discord-сервер**](https://dsc.gg/foxcraft-mc)!",
         color=discord.Colour.green())
-    embed.set_author(name="Команда FoxCraft",
+    embed.set_author(name="Команда Сектора",
                      icon_url="https://ibb.co/GR6sq2g")
     embed.add_field(name="Задержка (ping):", value=f"{int(status.latency)} мс")
     embed.add_field(name="Онлайн-игроки:",
@@ -68,22 +70,23 @@ async def server_status(ctx):
   await ctx.respond(embed=embed)
 
 
-@bot.slash_command(name="инфо", description="Посмотреть информацию обо мне!")
+@bot.slash_command(name="info", description="Посмотреть информацию обо мне!")
+# @bot.bridge_command()
 async def info(ctx):
   embed = discord.Embed(
-      title="FoxCraft Bot",
+      title="SectorBot",
       description=
-      "Я личный ~~раб~~ бот для Discord-сервера FoxCraft! Мне поручили реализовывать те функции, которые не умеют делать другие боты.\n\nОбязательно загляните на [**наш Discord-сервер**](https://dsc.gg/foxcraft-mc), там должно быть весело! Удачной игры на нашем сервере!",
+      "Я личный ~~раб~~ бот для Discord-сервера Сектор! Мне поручили реализовывать те функции, которые не умеют делать другие боты.\n\nОбязательно загляните на [**наш Discord-сервер**](https://dsc.gg/foxcraft-mc), там должно быть весело! Удачной игры на нашем сервере!",
       color=discord.Colour.blurple())
-  embed.set_author(name="Команда FoxCraft", icon_url="https://ibb.co/GR6sq2g")
+  embed.set_author(name="Команда Сектора", icon_url="https://ibb.co/GR6sq2g")
   embed.add_field(name="Версия:", value="0.0.3", inline=True)
   embed.add_field(name="Разработчик:", value="lotigara", inline=True)
   embed.add_field(name="Лицензия:", value="GNU GPL v3.0", inline=True)
   embed.add_field(name="Исходный код:",
                   value="[Вот](https://github.com/lotigara/foxcraft-bot/)",
-                  inline=True)
+                  inline=False)
   embed.set_footer(
-      text="Ставьте GNU/Linux или FreeBSD.")  # footers can have icons too
+      text="Ставьте GNU/Linux или *BSD.")  # footers can have icons too
   await ctx.respond(embed=embed)
 
 
