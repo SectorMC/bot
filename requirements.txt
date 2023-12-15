@@ -1,1 +1,3 @@
-pycord mcstatus
+pycord
+mcstatus
+flask
